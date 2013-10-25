@@ -1,7 +1,7 @@
 ---
 layout: base
 title: Devanagari Sorter
-libs: [ jshashtable-3.0 ]
+libs: [ jshashtable-3.0, jshashset-3.0 ]
 js: [ sort_devanagari ]
 scripts: |
   <script type="text/javascript">
@@ -13,7 +13,7 @@ scripts: |
           return element.find('option:selected').val();
         }
 
-        sort_devanagari({
+        var result = sort_devanagari( $('textarea').val().split('\n'), {
           descending          : (getSelected($('#order')) === 'desc'),
           rtl                 : (getSelected($('#direction')) === 'rtl'),
           combine_duplicates  : (getSelected($('#duplicates')) == 'true'),
@@ -24,6 +24,11 @@ scripts: |
           change_anusvara     : (getSelected($('#anusvara')) === 'true'),
           change_visarga      : (getSelected($('visarga')) === 'true')
         });
+        
+        $('#sorted').remove();
+        $('.container').append( '<div id="sorted">\n<h1 class="text-center">Sorted Data</h1>\n<p>' +
+          result.join('<br>\n') + '</p></div>'
+        );
       };
     })(jQuery);
   </script>
@@ -141,3 +146,4 @@ scripts: |
     Sort
   </button>
 </div>
+
