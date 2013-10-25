@@ -1,7 +1,32 @@
 ---
 layout: base
 title: Devanagari Sorter
-libs: [ jshashtable-3.0.js ]
+libs: [ jshashtable-3.0 ]
+js: [ sort_devanagari ]
+scripts: |
+  <script type="text/javascript">
+    var processOptions = (function($){
+      return function() {
+        "use strict";
+
+        function getSelected(element) {
+          return element.find('option:selected').val();
+        }
+
+        sort_devanagari({
+          descending          : (getSelected($('#order')) === 'desc'),
+          rtl                 : (getSelected($('#direction')) === 'rtl'),
+          combine_duplicates  : (getSelected($('#duplicates')) == 'true'),
+          separate_ksa        : (getSelected($('#ksa')) === 'true'),
+          separate_tra        : (getSelected($('#tra')) === 'true'),
+          separate_jna        : (getSelected($('#jna')) === 'true'),
+          candrabindu_pos     : getSelected($('#candrabindu')),
+          change_anusvara     : (getSelected($('#anusvara')) === 'true'),
+          change_visarga      : (getSelected($('visarga')) === 'true')
+        });
+      };
+    })(jQuery);
+  </script>
 ---
 
 <div class="row">
@@ -83,7 +108,7 @@ libs: [ jshashtable-3.0.js ]
   <div class="col-md-6 col-sm-6">
     <select id="candrabindu">
       <option value="with_anusvara" selected>Along with anusvāra</option>
-      <option value="after_anusvara">Before anusvāra</option>
+      <option value="after_anusvara">After anusvāra</option>
       <option value="after_consonants">After consonants</option>
     </select>
   </div>
@@ -111,7 +136,8 @@ libs: [ jshashtable-3.0.js ]
   </div>
 </div>
 <div class="row">
-  <button type="button" class="btn btn-primary col-md-2 col-md-offset-5 col-sm-2 col-sm-offset-5">
+  <button type="button" class="btn btn-primary col-md-2 col-md-offset-5 col-sm-2 col-sm-offset-5" 
+      onclick ="processOptions()">
     Sort
   </button>
 </div>
