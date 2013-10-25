@@ -24,9 +24,9 @@ scripts: |
           change_anusvara     : (getSelected($('#anusvara')) === 'true'),
           change_visarga      : (getSelected($('visarga')) === 'true')
         });
-        
+
         $('#sorted').remove();
-        $('.container').append( '<div id="sorted">\n<h1 class="text-center">Sorted Data</h1>\n<p>' +
+        $('.container').append( '<div id="sorted">\n<h1 class="text-center">Sorted Words</h1>\n<p>' +
           result.join('<br>\n') + '</p></div>'
         );
       };
@@ -36,8 +36,7 @@ scripts: |
 
 <div class="row">
   <p>Enter text to be sorted. Put each item on a different line.</p>
-  <textarea class="col-lg-12 col-md-12 col-sm-12 col-xs-12" rows=10 cols=100>
-  </textarea>
+  <textarea class="col-lg-12 col-md-12 col-sm-12 col-xs-12" rows=10 cols=100></textarea>
 </div>
 
 <div class="row">
@@ -141,7 +140,7 @@ scripts: |
   </div>
 </div>
 <div class="row">
-  <button type="button" class="btn btn-primary col-md-2 col-md-offset-5 col-sm-2 col-sm-offset-5" 
+  <button type="button" class="btn btn-primary col-md-2 col-md-offset-5 col-sm-2 col-sm-offset-5"
       onclick ="processOptions()">
     Sort
   </button>
