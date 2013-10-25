@@ -15,6 +15,8 @@ var sort_devanagari = (function($){
         s_matras = 'ािीूुृॄॢॣेैोौॅॉ',
         s_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         s_lowercase = 'abcdefghijklmnopqrstuvwzyz',
+        s_with_nuqta    = 'ऩऱऴक़ख़ग़ज़ड़ढ़फ़य़',
+        s_without_nuqta = 'नरळकखगजडढफय',
         order = ' अ' + s_vowels + 'ंः' + s_consonants + s_uppercase,
         i, this_char;
       for(i = 0; i < order.length; i++) {
@@ -40,9 +42,15 @@ var sort_devanagari = (function($){
         // the +9 ensures that क्ष, त्र, ज्ञ have weights below this value
         weights.put('ँ', { primary: weights.get('ळ').primary + 9, secondary: 0 });
       }
-
       for(i = 0; i < s_matras.length; i++) {
         matras.put(s_matras.charAt(i), s_vowels.charAt(i));
+      }
+      for(i = 0; i < s_with_nuqta.length; i++) {
+        weights.put(s_with_nuqta.charAt(i), {
+          primary: weights.get(s_without_nuqta.charAt(i)).primary, 
+          // consistently sort after characters with nuqta, to make duplicate elimination easier
+          secondary: nuqta_secondary + 1 
+        });
       }
       for(i = 0; i < s_consonants.length; i++) {
         consonants.add(s_consonants.charAt(i));
