@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>Devanagari Sorter</title>
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class = "container">
+     <h1 class="text-center">Devanagari Sorter</h1>
+    <div class="row">
+  <p>Enter text to be sorted. Put each item on a different line.</p>
+  <textarea class="col-lg-12 col-md-12 col-sm-12 col-xs-12" rows=10 cols=100>
+  </textarea>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    Sort order
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <select id="order">
+      <option value="asc" selected>Ascending</option>
+      <option value="desc">Descending</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    Sort direction
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <select id="direction">
+      <option value="ltr" selected>Left-to-right</option>
+      <option value="rtl">Right-to-left (retrograde)</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    For duplicate elements …
+  </div>
+  <div class = "col-md-6 col-sm-6">
+    <select id="duplicate">
+      <option value="true">Group sorted elements together</option>
+      <option value="false" selected>Show sorted elements separately</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    Sort kṣa (क्ष) as …
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <select id="ksa">
+      <option value="false" selected>Conjunct (क् + ष)</option>
+      <option value="true">Separate letter</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+  Sort tra (त्र) as …
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <select id="tra">
+      <option value="false" selected>Conjunct (त् + र)</option>
+      <option value="true">Separate letter</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    Sort jña (ज्ञ) as …
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <select id="jna">
+      <option value="false" selected>Conjunct (ज् + ञ)</option>
+      <option value="true">Separate letter</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    Sort candrabindu …
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <select id="candrabindu">
+      <option value="with_anusvara" selected>Along with anusvāra</option>
+      <option value="after_anusvara">Before anusvāra</option>
+      <option value="after_consonants">After consonants</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    Treat anusvāra before vārgika akṣara as …
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <select id="anusvara">
+      <option value="false" selected>anusvāra</option>
+      <option value="true">pancamākṣara</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    Treat visarga before sibilant (ś, ṣ, s) as …
+  </div>
+    <div class="col-md-6 col-sm-6">
+    <select id="visarga">
+      <option value="false" selected>visarga</option>
+      <option value="true">sibilant</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <button type="button" class="btn btn-primary col-md-2 col-md-offset-5 col-sm-2 col-sm-offset-5">
+    Sort
+  </button>
+</div>
+  </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  
+    <script src="/_libs/jshashtable-3.0.js"></script>
+  
+  
+</body>
