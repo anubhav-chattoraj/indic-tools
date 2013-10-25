@@ -13,10 +13,10 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   {% for lib in page.libs %}
-    <script src="{{ page.baseurl }}/libs/{{ lib }}.js"></script>
+    <script src="{{ site.baseurl }}/libs/{{ lib }}.js"></script>
   {% endfor %}
   {% for script in page.js %}
-    <script src="{{ page.baseurl }}/js/{{ script }}.js"></script>
+    <script src="{{ site.baseurl }}/js/{{ script }}.js"></script>
   {% endfor %}
   {{ page.scripts }}
 </body>
