@@ -12,11 +12,11 @@ scripts: |
         function getSelected(element) {
           return element.find('option:selected').val();
         }
-
+        var combine_duplicates = (getSelected($('#duplicate')) === 'true');
         var result = sort_devanagari( $('textarea').val().split('\n'), {
           descending          : (getSelected($('#order')) === 'desc'),
           rtl                 : (getSelected($('#direction')) === 'rtl'),
-          combine_duplicates  : (getSelected($('#duplicates')) == 'true'),
+          combine_duplicates  : combine_duplicates,
           separate_ksa        : (getSelected($('#ksa')) === 'true'),
           separate_tra        : (getSelected($('#tra')) === 'true'),
           separate_jna        : (getSelected($('#jna')) === 'true'),
@@ -24,10 +24,20 @@ scripts: |
           change_anusvara     : (getSelected($('#anusvara')) === 'true'),
           change_visarga      : (getSelected($('#visarga')) === 'true')
         });
-
+        
+        var result_body = '';
+        if(combine_duplicates) {
+          result_body = '<table class="table table-striped table-bordered table-condensed">\n' + 
+            $.map(result, function(element, idx) {
+              return '<tr><td>' + element.string + '</td><td>' + element.count + '</td></tr>';
+            }).join('\n') + '</table>'
+        } else {
+          result_body = '<p>\n' + result.join('<br>\n') + '</p>\n';
+        }
         $('#sorted').remove();
-        $('.container').append( '<div id="sorted">\n<h1 class="text-center">Sorted Words</h1>\n<p>' +
-          result.join('<br>\n') + '</p></div>'
+        $('.container').append( '<div id="sorted" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">\n' +
+          '<h1 class="text-center">Sorted Words</h1>\n' +
+          result_body + '</div>'
         );
       };
     })(jQuery);
@@ -67,8 +77,8 @@ scripts: |
   </div>
   <div class = "col-md-6 col-sm-6">
     <select id="duplicate">
-      <option value="true">Group sorted elements together</option>
       <option value="false" selected>Show sorted elements separately</option>
+      <option value="true">Group sorted elements together</option>
     </select>
   </div>
 </div>

@@ -1,7 +1,3 @@
-function debug(word) {
-  console.log(word.primary + '    ' + word.secondary);
-}
-
 var sort_devanagari = (function($){
   "use strict";
   return function(words, options){
@@ -99,7 +95,6 @@ var sort_devanagari = (function($){
       if(options.rtl) {
         processed_word.primary.reverse(); processed_word.secondary.reverse();
       }
-      console.log(word); debug(processed_word);
       return processed_word;
     }
 
@@ -123,7 +118,6 @@ var sort_devanagari = (function($){
         });
       }
       if(options.change_visarga) {
-        console.log('here');
         var i, sibilants = 'शषस', visarga_weight = weights.get('ः'), char_weight;
         for(i = 0; i < sibilants.length; i++) {
           char_weight = weights.get(sibilants.charAt(i));
@@ -162,7 +156,6 @@ var sort_devanagari = (function($){
             }
 
             if(match) {
-              console.log('before: '+word.primary);
               tmp_primary = []; tmp_secondary = [];
               for(j = 0; j < rhs.length; j++) {
                 tmp_primary.push(rhs[j].primary);
@@ -172,7 +165,6 @@ var sort_devanagari = (function($){
                 concat(word.primary.slice(i+lhs.length, word.primary.length));
               word.secondary = word.secondary.slice(0, i).concat(tmp_secondary).
                 concat(word.secondary.slice(i+lhs.length, word.secondary.length));
-              console.log('after:  '+word.primary);
             }
           }
         }); 
@@ -212,9 +204,19 @@ var sort_devanagari = (function($){
       result.reverse();
     }
     
-    $.each(processed_words, function(idx, word){
-      console.log(word.primary);
-    });
-    return result;
+    if(options.combine_duplicates){
+      var result_with_counts = [];
+      $.each(result, function(i, word) {
+        var cur_result = result_with_counts[result_with_counts.length - 1]
+        if(typeof cur_result !== 'undefined' && cur_result.string === word) {
+          cur_result.count += 1;
+        } else {
+          result_with_counts.push({string: word, count: 1});
+        }
+      });
+      return result_with_counts;
+    } else {
+      return result;
+    }
   };
 })(jQuery);
