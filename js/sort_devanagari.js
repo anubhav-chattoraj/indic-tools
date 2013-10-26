@@ -16,7 +16,7 @@ var sort_devanagari = (function($){
         s_without_nuqta = 'नरळकखगजडढफय',
         s_devanagari_digits = '१२३४५६७८९०',
         s_roman_digits      = '1234567890',
-        order = ' ।॥ॐअ' + s_vowels + 'ंः' + s_consonants,
+        order = ' ॐअ' + s_vowels + 'ंः' + s_consonants + '।॥',
         i, this_char;
       for(i = 0; i < order.length; i++) {
         // The multiples of 10 make it easy to insert more letters in between
