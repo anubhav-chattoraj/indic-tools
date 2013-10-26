@@ -3,12 +3,20 @@
   <meta charset="UTF-8">
   <title>{{ page.title }}</title>
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <style type="text/css">
+    .top-buffer { margin-top:20px; }
+  </style>
 </head>
 
 <body>
-  <div class = "container">
+  <div class = "container" id="page-contents">
      <h1 class="text-center">{{ page.title }}</h1>
     {{ content }}
+  </div>
+  <div class = "container" id="page-footer">
+    <p class="text-muted text-right">Source code available 
+      <a href="https://github.com/anubhav-chattoraj/indic-tools/tree/gh-pages">on Github</a>.
+    </p>
   </div>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>

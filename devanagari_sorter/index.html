@@ -13,7 +13,7 @@ scripts: |
         words = $.map(words, function (word, idx) {
           return word.replace(/(\S+)\s+$/, '$1'); // strip trailing whitespace
         });
-        
+
         function getSelected(element) {
           return element.find('option:selected').val();
         }
@@ -40,8 +40,8 @@ scripts: |
           result_body = '<p>\n' + result.join('<br>\n') + '</p>\n';
         }
         $('#sorted').remove();
-        $('.container').append( '<div id="sorted" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">\n' +
-          '<h1 class="text-center">Sorted Words</h1>\n' +
+        $('#page-contents').append( '<div id="sorted" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">\n' +
+          '<h1 class="text-center">Sorted Elements</h1>\n' +
           result_body + '</div>'
         );
       };
@@ -54,106 +54,120 @@ scripts: |
   <textarea class="col-lg-12 col-md-12 col-sm-12 col-xs-12" rows=10 cols=100></textarea>
 </div>
 
-<div class="row">
-  <div class="col-md-6 col-sm-6">
-    Sort order
-  </div>
-  <div class="col-md-6 col-sm-6">
-    <select id="order">
-      <option value="asc" selected>Ascending</option>
-      <option value="desc">Descending</option>
-    </select>
+<div class="row top-buffer">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><span class="panel-title">Options</span></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          Sort order
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <select id="order">
+            <option value="asc" selected>Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          Sort direction
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <select id="direction">
+            <option value="ltr" selected>Left-to-right</option>
+            <option value="rtl">Right-to-left (retrograde)</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          For duplicate elements …
+        </div>
+        <div class = "col-md-6 col-sm-6">
+          <select id="duplicate">
+            <option value="false" selected>Show sorted elements separately</option>
+            <option value="true">Group sorted elements together</option>
+          </select>
+        </div>
+      </div>
+      <fieldset>
+        <legend>Conjuncts</legend>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            Sort kṣa (क्ष) as …
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <select id="ksa">
+              <option value="false" selected>Conjunct (क् + ष)</option>
+              <option value="true">Separate letter</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+          Sort tra (त्र) as …
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <select id="tra">
+              <option value="false" selected>Conjunct (त् + र)</option>
+              <option value="true">Separate letter</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            Sort jña (ज्ञ) as …
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <select id="jna">
+              <option value="false" selected>Conjunct (ज् + ञ)</option>
+              <option value="true">Separate letter</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Diacritics</legend>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            Sort candrabindu …
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <select id="candrabindu">
+              <option value="with_anusvara" selected>Along with anusvāra</option>
+              <option value="after_anusvara">After anusvāra</option>
+              <option value="after_consonants">After consonants</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            Treat anusvāra before vārgika akṣara as …
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <select id="anusvara">
+              <option value="false" selected>anusvāra</option>
+              <option value="true">pancamākṣara</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            Treat visarga before sibilant (ś, ṣ, s) as …
+          </div>
+            <div class="col-md-6 col-sm-6">
+            <select id="visarga">
+              <option value="false" selected>visarga</option>
+              <option value="true">sibilant</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+    </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-6 col-sm-6">
-    Sort direction
-  </div>
-  <div class="col-md-6 col-sm-6">
-    <select id="direction">
-      <option value="ltr" selected>Left-to-right</option>
-      <option value="rtl">Right-to-left (retrograde)</option>
-    </select>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6 col-sm-6">
-    For duplicate elements …
-  </div>
-  <div class = "col-md-6 col-sm-6">
-    <select id="duplicate">
-      <option value="false" selected>Show sorted elements separately</option>
-      <option value="true">Group sorted elements together</option>
-    </select>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6 col-sm-6">
-    Sort kṣa (क्ष) as …
-  </div>
-  <div class="col-md-6 col-sm-6">
-    <select id="ksa">
-      <option value="false" selected>Conjunct (क् + ष)</option>
-      <option value="true">Separate letter</option>
-    </select>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6 col-sm-6">
-  Sort tra (त्र) as …
-  </div>
-  <div class="col-md-6 col-sm-6">
-    <select id="tra">
-      <option value="false" selected>Conjunct (त् + र)</option>
-      <option value="true">Separate letter</option>
-    </select>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6 col-sm-6">
-    Sort jña (ज्ञ) as …
-  </div>
-  <div class="col-md-6 col-sm-6">
-    <select id="jna">
-      <option value="false" selected>Conjunct (ज् + ञ)</option>
-      <option value="true">Separate letter</option>
-    </select>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6 col-sm-6">
-    Sort candrabindu …
-  </div>
-  <div class="col-md-6 col-sm-6">
-    <select id="candrabindu">
-      <option value="with_anusvara" selected>Along with anusvāra</option>
-      <option value="after_anusvara">After anusvāra</option>
-      <option value="after_consonants">After consonants</option>
-    </select>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6 col-sm-6">
-    Treat anusvāra before vārgika akṣara as …
-  </div>
-  <div class="col-md-6 col-sm-6">
-    <select id="anusvara">
-      <option value="false" selected>anusvāra</option>
-      <option value="true">pancamākṣara</option>
-    </select>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6 col-sm-6">
-    Treat visarga before sibilant (ś, ṣ, s) as …
-  </div>
-    <div class="col-md-6 col-sm-6">
-    <select id="visarga">
-      <option value="false" selected>visarga</option>
-      <option value="true">sibilant</option>
-    </select>
-  </div>
-</div>
+
 <div class="row">
   <button type="button" class="btn btn-primary col-md-2 col-md-offset-5 col-sm-2 col-sm-offset-5"
       onclick ="processOptions()">

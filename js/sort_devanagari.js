@@ -75,7 +75,7 @@ var sort_devanagari = (function($){
     function segment_word(word) {
       // segment types: 0 = Roman digits, 1 = Devanagari digits, 2 = Well-formed, 3 = Gibberish
       var this_segment = '', segments = [], segment_type, i, this_type, this_char;
-      
+
       for(i = 0; i < word.length; i++) {
         this_char = word.charAt(i);
         if(weights.containsKey(this_char) || matras.containsKey(this_char)
