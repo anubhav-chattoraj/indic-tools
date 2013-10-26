@@ -48,19 +48,20 @@ var sort_devanagari = (function($){
       for(i = 0; i < s_matras.length; i++) {
         matras.put(s_matras.charAt(i), s_vowels.charAt(i));
       }
-      for(i = 0; i < s_with_nuqta.length; i++) {
-        weights.put(s_with_nuqta.charAt(i), {
-          primary: weights.get(s_without_nuqta.charAt(i)).primary,
-          // consistently sort after characters with nuqta, to make duplicate elimination easier
-          secondary: precomposed_nuqta_secondary
-        });
-      }
       for(i = 0; i < s_devanagari_digits.length; i++) {
         digits.put(s_devanagari_digits.charAt(i), s_roman_digits.charAt(i));
         roman_digits.add(s_roman_digits.charAt(i));
       }
       for(i = 0; i < s_consonants.length; i++) {
         consonants.add(s_consonants.charAt(i));
+      }
+      for(i = 0; i < s_with_nuqta.length; i++) {
+        weights.put(s_with_nuqta.charAt(i), {
+          primary: weights.get(s_without_nuqta.charAt(i)).primary,
+          // consistently sort after characters with nuqta, to make duplicate elimination easier
+          secondary: precomposed_nuqta_secondary
+        });
+        consonants.add(s_with_nuqta.charAt(i));
       }
     })();
 
@@ -74,6 +75,7 @@ var sort_devanagari = (function($){
     function segment_word(word) {
       // segment types: 0 = Roman digits, 1 = Devanagari digits, 2 = Well-formed, 3 = Gibberish
       var this_segment = '', segments = [], segment_type, i, this_type, this_char;
+      
       for(i = 0; i < word.length; i++) {
         this_char = word.charAt(i);
         if(weights.containsKey(this_char) || matras.containsKey(this_char)

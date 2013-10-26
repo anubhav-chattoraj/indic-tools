@@ -9,11 +9,16 @@ scripts: |
       return function() {
         "use strict";
 
+        var words = $('textarea').val().split('\n');
+        words = $.map(words, function (word, idx) {
+          return word.replace(/\s+$/, ''); // strip trailing whitespace
+        });
+        
         function getSelected(element) {
           return element.find('option:selected').val();
         }
         var combine_duplicates = (getSelected($('#duplicate')) === 'true');
-        var result = sort_devanagari( $('textarea').val().split('\n'), {
+        var result = sort_devanagari( words , {
           descending          : (getSelected($('#order')) === 'desc'),
           rtl                 : (getSelected($('#direction')) === 'rtl'),
           combine_duplicates  : combine_duplicates,
