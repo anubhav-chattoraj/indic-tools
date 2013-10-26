@@ -12,24 +12,15 @@ var sort_devanagari = (function($){
         s_consonants = 'कखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसहळ',
         s_vowels = 'आइईउऊऋॠऌॡएऐओऔॲऑ', // doesn't include अ
         s_matras = 'ािीूुृॄॢॣेैोौॅॉ',
-        s_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-        s_lowercase = 'abcdefghijklmnopqrstuvwzyz',
         s_with_nuqta    = 'ऩऱऴक़ख़ग़ज़ड़ढ़फ़य़',
         s_without_nuqta = 'नरळकखगजडढफय',
         s_devanagari_digits = '१२३४५६७८९०',
         s_roman_digits      = '1234567890',
-        order = ' ।॥ॐअ' + s_vowels + 'ंः' + s_consonants + s_uppercase,
+        order = ' ।॥ॐअ' + s_vowels + 'ंः' + s_consonants,
         i, this_char;
       for(i = 0; i < order.length; i++) {
         // The multiples of 10 make it easy to insert more letters in between
         weights.put(order.charAt(i), {primary: (i+1)*10, secondary: 0});
-      }
-      for(i = 0; i < s_lowercase.length; i++) {
-        this_char = s_lowercase.charAt(i);
-        weights.put(this_char, {
-          primary: weights.get(s_uppercase.charAt(i)).primary,
-          secondary: 0
-        });
       }
 
       weights.put('़', { primary: 0, secondary: nuqta_secondary });
