@@ -19,6 +19,7 @@ scripts: |
         }
         var combine_duplicates = (getSelected($('#duplicate')) === 'true');
         var result = sort_devanagari( words , {
+          ignore              : $('#ignore').val(),
           descending          : (getSelected($('#order')) === 'desc'),
           rtl                 : (getSelected($('#direction')) === 'rtl'),
           combine_duplicates  : combine_duplicates,
@@ -64,6 +65,14 @@ scripts: |
     <div class="panel-body">
       <div class="row">
         <div class="col-md-6 col-sm-6">
+          Ignore these characters
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <input type="text" id="ignore">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
           Sort order
         </div>
         <div class="col-md-6 col-sm-6">
@@ -90,8 +99,8 @@ scripts: |
         </div>
         <div class = "col-md-6 col-sm-6">
           <select id="duplicate">
-            <option value="false" selected>Show sorted elements separately</option>
-            <option value="true">Group sorted elements together</option>
+            <option value="false" selected>Show equivalent elements separately</option>
+            <option value="true">Group equivalent elements together</option>
           </select>
         </div>
       </div>

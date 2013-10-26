@@ -3,10 +3,9 @@ var sort_devanagari = (function($){
   return function(words, options){
 
     var weights = new Hashtable(), matras = new Hashtable(),
-      consonants = new HashSet(), digits = new Hashtable(), roman_digits = new HashSet(),
-      nuqta_secondary = 20, precomposed_nuqta_secondary = nuqta_secondary + 1,
-      candrabindu_secondary = 20, lowercase_secondary = 20,
-      avagraha_secondary = 10, roman_numeral_secondary = 20;
+      consonants = new HashSet(), ignore = new HashSet(),
+      digits = new Hashtable(),
+      nuqta_secondary = 20, candrabindu_secondary = 20, avagraha_secondary = 10;
 
     (function init() {
       var
@@ -29,7 +28,7 @@ var sort_devanagari = (function($){
         this_char = s_lowercase.charAt(i);
         weights.put(this_char, {
           primary: weights.get(s_uppercase.charAt(i)).primary,
-          secondary: lowercase_secondary
+          secondary: 0
         });
       }
 
@@ -50,7 +49,7 @@ var sort_devanagari = (function($){
       }
       for(i = 0; i < s_devanagari_digits.length; i++) {
         digits.put(s_devanagari_digits.charAt(i), s_roman_digits.charAt(i));
-        roman_digits.add(s_roman_digits.charAt(i));
+        digits.put(s_roman_digits.charAt(i), s_roman_digits.charAt(i));
       }
       for(i = 0; i < s_consonants.length; i++) {
         consonants.add(s_consonants.charAt(i));
@@ -58,10 +57,14 @@ var sort_devanagari = (function($){
       for(i = 0; i < s_with_nuqta.length; i++) {
         weights.put(s_with_nuqta.charAt(i), {
           primary: weights.get(s_without_nuqta.charAt(i)).primary,
-          // consistently sort after characters with nuqta, to make duplicate elimination easier
-          secondary: precomposed_nuqta_secondary
+          secondary: nuqta_secondary,
         });
         consonants.add(s_with_nuqta.charAt(i));
+      }
+      if(typeof options.ignore !== 'undefined' && options.ignore !== null){
+        for(i = 0; i < options.ignore.length; i++) {
+          ignore.add(options.ignore.charAt(i));
+        }
       }
     })();
 
@@ -73,19 +76,19 @@ var sort_devanagari = (function($){
     }
 
     function segment_word(word) {
-      // segment types: 0 = Roman digits, 1 = Devanagari digits, 2 = Well-formed, 3 = Gibberish
+      // segment types: 1 = Numbers, 2 = Known characters, 3 = Unknown characters
       var this_segment = '', segments = [], segment_type, i, this_type, this_char;
 
       for(i = 0; i < word.length; i++) {
         this_char = word.charAt(i);
-        if(weights.containsKey(this_char) || matras.containsKey(this_char)
+        if(ignore.contains(this_char)) {
+          continue; // ignore
+        } else if(weights.containsKey(this_char) || matras.containsKey(this_char)
             || this_char == '़' || this_char == '्'
         ) {
           this_type = 2;
         } else if (digits.containsKey(this_char)) {
           this_type = 1;
-        } else if (roman_digits.contains(this_char)) {
-          this_type = 0;
         } else {
           this_type = 3;
         }
@@ -118,11 +121,7 @@ var sort_devanagari = (function($){
       }
 
       $.each(segments, function(idx, segment) {
-        if(segment.segment_type === 0) {
-          processed_word.segment_type.push(1);
-          processed_word.primary.push(parseInt(segment.string));
-          processed_word.secondary.push(roman_numeral_secondary);
-        } else if (segment.segment_type == 1) {
+        if (segment.segment_type == 1) {
           processed_word.segment_type.push(1);
           processed_word.primary.push(parseDevanagariInt(segment.string));
           processed_word.secondary.push(0);
@@ -276,16 +275,20 @@ var sort_devanagari = (function($){
     }
 
     if(options.combine_duplicates){
-      var result_with_counts = [];
-      $.each(result, function(i, word) {
-        var cur_result = result_with_counts[result_with_counts.length - 1]
-        if(typeof cur_result !== 'undefined' && cur_result.string === word) {
-          cur_result.count += 1;
+      var results_with_count = [], cur_result_with_count,
+        cur_processed_word, this_processed_word, i;
+      for(i = 0; i < result.length; i ++) {
+        this_processed_word = processed_words[i];
+        if(typeof cur_processed_word !== 'undefined' && 
+            compare_processed_words(this_processed_word, cur_processed_word) === 0) {
+          cur_result_with_count.count += 1;
         } else {
-          result_with_counts.push({string: word, count: 1});
+          cur_processed_word = processed_words[i];
+          cur_result_with_count = { string: result[i], count: 1};
+          results_with_count.push(cur_result_with_count);
         }
-      });
-      return result_with_counts;
+      }
+      return results_with_count;
     } else {
       return result;
     }
