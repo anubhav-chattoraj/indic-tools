@@ -11,7 +11,7 @@ scripts: |
 
         var words = $('textarea').val().split('\n');
         words = $.map(words, function (word, idx) {
-          return word.replace(/\s+$/, ''); // strip trailing whitespace
+          return word.replace(/(\S+)\s+$/, '$1'); // strip trailing whitespace
         });
         
         function getSelected(element) {
