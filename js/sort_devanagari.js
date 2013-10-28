@@ -5,7 +5,7 @@ var sort_devanagari = (function($){
     var weights = new Hashtable(), matras = new Hashtable(),
       consonants = new HashSet(), ignore = new HashSet(),
       digits = new Hashtable(),
-      nuqta_secondary = 20, candrabindu_secondary = 20, avagraha_secondary = 10;
+      nuqta_secondary = 20, avagraha_secondary = 10;
 
     (function init() {
       var
@@ -24,16 +24,22 @@ var sort_devanagari = (function($){
       }
 
       weights.put('़', { primary: 0, secondary: nuqta_secondary });
-      // candrabindu weights
+
+      var candrabindu_primary, candrabindu_secondary = 0;
       if(typeof options.candrabindu_pos === 'undefined') option.candrabindu_pos = 'with_anusvara';
       if(options.candrabindu_pos === 'with_anusvara') {
-        weights.put('ँ', { primary: weights.get('ं').primary, secondary: candrabindu_secondary });
+        candrabindu_primary = weights.get('ं').primary;
+        candrabindu_secondary = 20;
+      } else if(options.candrabindu_pos === 'before_anusvara') {
+        candrabindu_primary = weights.get('ं').primary - 5;
       } else if(options.candrabindu_pos === 'after_anusvara') {
-        weights.put('ँ', { primary: weights.get('ं').primary + 5, secondary: 0 });
+        candrabindu_primary = weights.get('ं').primary + 5;
       } else if(options.candrabindu_pos === 'after_consonants') {
         // the +9 ensures that क्ष, त्र, ज्ञ have weights below this value
-        weights.put('ँ', { primary: weights.get('ळ').primary + 9, secondary: 0 });
+        candrabindu_primary = weights.get('ळ').primary + 9;
       }
+      weights.put('ँ', {primary: candrabindu_primary, secondary: candrabindu_secondary});
+
       weights.put('ऽ', { primary: weights.get('अ').primary, secondary: avagraha_secondary });
       for(i = 0; i < s_matras.length; i++) {
         matras.put(s_matras.charAt(i), s_vowels.charAt(i));
