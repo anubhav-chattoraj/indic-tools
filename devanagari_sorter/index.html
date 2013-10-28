@@ -20,6 +20,7 @@ scripts: |
         var combine_duplicates = $('#duplicate').is(':checked');
         var result = sort_devanagari( words , {
           ignore              : $('#ignore').val(),
+          ignore_all           : $('#ignoreall').is(':checked'),
           descending          : (getSelected($('#order')) === 'desc'),
           rtl                 : (getSelected($('#direction')) === 'rtl'),
           combine_duplicates  : combine_duplicates,
@@ -69,6 +70,14 @@ scripts: |
         </div>
         <div class="col-md-6 col-sm-6">
           <input type="text" id="ignore">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          Ignore numbers and Roman characters
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <input type="checkbox" id="ignoreall">
         </div>
       </div>
       <div class="row">

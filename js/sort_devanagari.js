@@ -118,11 +118,7 @@ var sort_devanagari = (function($){
       }
 
       $.each(segments, function(idx, segment) {
-        if (segment.segment_type == 1) {
-          processed_word.segment_type.push(1);
-          processed_word.primary.push(parseDevanagariInt(segment.string));
-          processed_word.secondary.push(0);
-        } else if (segment.segment_type == 2) {
+        if (segment.segment_type == 2) {
           for(i = 0; i < segment.string.length; i++) {
             this_char = segment.string.charAt(i);
             if(this_char === '्') {
@@ -148,10 +144,16 @@ var sort_devanagari = (function($){
           if(possible_schwa) {
             push_weight('अ');
           }
-        } else {
-          processed_word.segment_type.push(3);
-          processed_word.primary.push(segment); // let the built-in sort order handle this
-          processed_word.secondary.push(0);
+        } else if(!options.ignore_all) {
+          if (segment.segment_type == 1) {
+            processed_word.segment_type.push(1);
+            processed_word.primary.push(parseDevanagariInt(segment.string));
+            processed_word.secondary.push(0);
+          } else {
+            processed_word.segment_type.push(3);
+            processed_word.primary.push(segment); // let the built-in sort order handle this
+            processed_word.secondary.push(0);
+          }
         }
       });
       return processed_word;
