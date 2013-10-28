@@ -154,10 +154,6 @@ var sort_devanagari = (function($){
           processed_word.secondary.push(0);
         }
       });
-
-      if(options.rtl) {
-        processed_word.primary.reverse(); processed_word.secondary.reverse();
-      }
       return processed_word;
     }
 
@@ -233,6 +229,13 @@ var sort_devanagari = (function($){
         });
       });
     })();
+
+    if(options.rtl) {
+      $.each(processed_words, function(idx, processed_word) {
+        processed_word.primary.reverse(); 
+        processed_word.secondary.reverse();
+      });
+    }
 
     function compare_processed_words(word1, word2) {
       var i;
