@@ -17,18 +17,18 @@ scripts: |
         function getSelected(element) {
           return element.find('option:selected').val();
         }
-        var combine_duplicates = (getSelected($('#duplicate')) === 'true');
+        var combine_duplicates = $('#duplicate').is(':checked');
         var result = sort_devanagari( words , {
           ignore              : $('#ignore').val(),
           descending          : (getSelected($('#order')) === 'desc'),
           rtl                 : (getSelected($('#direction')) === 'rtl'),
           combine_duplicates  : combine_duplicates,
-          separate_ksa        : (getSelected($('#ksa')) === 'true'),
-          separate_tra        : (getSelected($('#tra')) === 'true'),
-          separate_jna        : (getSelected($('#jna')) === 'true'),
+          separate_ksa        : $('#ksa').is(':checked'),
+          separate_tra        : $('#tra').is(':checked'),
+          separate_jna        : $('#jna').is(':checked'),
           candrabindu_pos     : getSelected($('#candrabindu')),
-          change_anusvara     : (getSelected($('#anusvara')) === 'true'),
-          change_visarga      : (getSelected($('#visarga')) === 'true')
+          change_anusvara     : $('#anusvara').is(':checked'),
+          change_visarga      : $('#visarga').is(':checked')
         });
 
         var result_body = '';
@@ -95,13 +95,10 @@ scripts: |
       </div>
       <div class="row">
         <div class="col-md-6 col-sm-6">
-          For duplicate elements …
+          Combine equivalent (duplicate) elements together
         </div>
         <div class = "col-md-6 col-sm-6">
-          <select id="duplicate">
-            <option value="false" selected>Show equivalent elements separately</option>
-            <option value="true">Group equivalent elements together</option>
-          </select>
+          <input id="duplicate" type="checkbox">
         </div>
       </div>
       <fieldset>
@@ -157,24 +154,18 @@ scripts: |
         </div>
         <div class="row">
           <div class="col-md-6 col-sm-6">
-            Treat anusvāra before vārgika akṣara as …
+            Change anusvāra to pancamākṣara when possible
           </div>
           <div class="col-md-6 col-sm-6">
-            <select id="anusvara">
-              <option value="false" selected>anusvāra</option>
-              <option value="true">pancamākṣara</option>
-            </select>
+            <input id="anusvara" type="checkbox">
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 col-sm-6">
-            Treat visarga before sibilant (ś, ṣ, s) as …
+            Apply visarga sandhi when possible
           </div>
-            <div class="col-md-6 col-sm-6">
-            <select id="visarga">
-              <option value="false" selected>visarga</option>
-              <option value="true">sibilant</option>
-            </select>
+          <div class="col-md-6 col-sm-6">
+            <input id="visarga" type="checkbox">
           </div>
         </div>
       </fieldset>
