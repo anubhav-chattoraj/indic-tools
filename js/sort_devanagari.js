@@ -5,13 +5,14 @@ var sort_devanagari = (function($){
     var weights = new Hashtable(), matras = new Hashtable(),
       consonants = new HashSet(), ignore = new HashSet(),
       digits = new Hashtable(),
-      nuqta_secondary = 20, avagraha_secondary = 10;
+      nuqta_secondary = 20, avagraha_secondary = 10, 
+      alternate_glyph_secondary = 30;
 
     (function init() {
       var
         s_consonants = 'कखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसहळ',
-        s_vowels = 'आइईउऊऋॠऌॡएऐओऔॲऑ', // doesn't include अ
-        s_matras = 'ािीूुृॄॢॣेैोौॅॉ',
+        s_vowels = 'आइईउऊऋॠऌॡऄएऐऒओॵॲऑ', // doesn't include अ
+        s_matras = 'ािीूुृॄॢॣॆेैॊो ॏौॅॉ',
         s_with_nuqta    = 'ऩऱऴक़ख़ग़ज़ड़ढ़फ़य़',
         s_without_nuqta = 'नरळकखगजडढफय',
         s_devanagari_digits = '१२३४५६७८९०',
@@ -22,6 +23,8 @@ var sort_devanagari = (function($){
         // The multiples of 10 make it easy to insert more letters in between
         weights.put(order.charAt(i), {primary: (i+1)*10, secondary: 0});
       }
+      weights.put('ऎ', {primary: weights.get('ऄ').primary, secondary: alternate_glyph_secondary});
+      weights.put('ऍ', {primary: weights.get('ॲ').primary, secondary: alternate_glyph_secondary});
 
       weights.put('़', { primary: 0, secondary: nuqta_secondary });
 
