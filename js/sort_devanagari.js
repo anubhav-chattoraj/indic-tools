@@ -12,7 +12,7 @@ var sort_devanagari = (function($){
       var
         s_consonants = 'कखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसहळ',
         s_vowels = 'आइईउऊऋॠऌॡऄएऐऒओॵॲऑ', // doesn't include अ
-        s_matras = 'ािीूुृॄॢॣॆेैॊो ॏौॅॉ',
+        s_matras = 'ािीूुृॄॢॣॆेैॊोॏौॅॉ',
         s_with_nuqta    = 'ऩऱऴक़ख़ग़ज़ड़ढ़फ़य़',
         s_without_nuqta = 'नरळकखगजडढफय',
         s_devanagari_digits = '१२३४५६७८९०',
@@ -122,6 +122,7 @@ var sort_devanagari = (function($){
 
       $.each(segments, function(idx, segment) {
         if (segment.segment_type == 2) {
+          possible_schwa = false;
           for(i = 0; i < segment.string.length; i++) {
             this_char = segment.string.charAt(i);
             if(this_char === '्') {
