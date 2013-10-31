@@ -11,7 +11,7 @@ var sort_devanagari = (function($){
     (function init() {
       var
         s_consonants = 'कखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसहळ',
-        s_vowels = 'आइईउऊऋॠऌॡऄएऐऒओॵॲऑ', // doesn't include अ
+        s_vowels = 'आइईउऊऋॠऌॡऄएऐऒओॵऔॲऑ', // doesn't include अ
         s_matras = 'ािीूुृॄॢॣॆेैॊोॏौॅॉ',
         s_with_nuqta    = 'ऩऱऴक़ख़ग़ज़ड़ढ़फ़य़',
         s_without_nuqta = 'नरळकखगजडढफय',
