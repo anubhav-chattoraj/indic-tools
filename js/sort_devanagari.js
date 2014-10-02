@@ -5,7 +5,7 @@ var sort_devanagari = (function($){
     var weights = new Hashtable(), matras = new Hashtable(),
       consonants = new HashSet(), ignore = new HashSet(),
       digits = new Hashtable(),
-      nuqta_secondary = 20, avagraha_secondary = 10, 
+      nuqta_secondary = 20, avagraha_secondary = 10,
       alternate_glyph_secondary = 30;
 
     (function init() {
@@ -77,10 +77,14 @@ var sort_devanagari = (function($){
 
     function segment_word(word) {
       // segment types: 1 = Numbers, 2 = Known characters, 3 = Unknown characters
-      var this_segment = '', segments = [], segment_type, i, this_type, this_char;
+      var tempword = '', this_segment = '', segments = [], segment_type, i, this_type, this_char;
 
-      for(i = 0; i < word.length; i++) {
-        this_char = word.charAt(i);
+      tempword = word;
+      if(options.ignore_spaces) {
+        tempword = tempword.replace(/\s/, '');
+      }
+      for(i = 0; i < tempword.length; i++) {
+        this_char = tempword.charAt(i);
         if(ignore.contains(this_char)) {
           continue; // ignore
         } else if(weights.containsKey(this_char) || matras.containsKey(this_char)
@@ -238,7 +242,7 @@ var sort_devanagari = (function($){
 
     if(options.rtl) {
       $.each(processed_words, function(idx, processed_word) {
-        processed_word.primary.reverse(); 
+        processed_word.primary.reverse();
         processed_word.secondary.reverse();
       });
     }
@@ -285,7 +289,7 @@ var sort_devanagari = (function($){
         cur_processed_word, this_processed_word, i;
       for(i = 0; i < result.length; i ++) {
         this_processed_word = processed_words[i];
-        if(typeof cur_processed_word !== 'undefined' && 
+        if(typeof cur_processed_word !== 'undefined' &&
             compare_processed_words(this_processed_word, cur_processed_word) === 0) {
           cur_result_with_count.count += 1;
         } else {

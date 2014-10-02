@@ -20,7 +20,8 @@ scripts: |
         var combine_duplicates = $('#duplicate').is(':checked');
         var result = sort_devanagari( words , {
           ignore              : $('#ignore').val(),
-          ignore_all           : $('#ignoreall').is(':checked'),
+          ignore_all          : $('#ignoreall').is(':checked'),
+          ignore_spaces       : $('#ignorespace').is(':checked'),
           descending          : (getSelected($('#order')) === 'desc'),
           rtl                 : (getSelected($('#direction')) === 'rtl'),
           combine_duplicates  : combine_duplicates,
@@ -36,11 +37,11 @@ scripts: |
         if(combine_duplicates) {
           result_body = '<table class="table table-striped table-bordered table-condensed">\n' +
             $.map(result, function(element, idx) {
-              return '<tr><td>' + element.string.replace(/ /, '&nbsp;') + '</td><td>' + 
+              return '<tr><td>' + element.string.replace(/ /, '&nbsp;') + '</td><td>' +
                 element.count + '</td></tr>';
             }).join('\n') + '</table>'
         } else {
-          result_body = '<p>\n' + 
+          result_body = '<p>\n' +
             $.map(result, function(word, idx) {
               return word.replace(/ /, '&nbsp;');
             }).join('<br>\n') + '</p>\n';
@@ -78,6 +79,14 @@ scripts: |
         </div>
         <div class="col-md-6 col-sm-6">
           <input type="checkbox" id="ignoreall">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          Ignore spaces
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <input type="checkbox" id="ignorespace">
         </div>
       </div>
       <div class="row">
