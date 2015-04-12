@@ -112,6 +112,7 @@ var sort_devanagari = (function($){
     }
 
     function process_segments(segments) {
+
       // segment type in processed_word: 1 = number, 2 = characters, 3 = gibberish
       var processed_word = {segment_type: [], primary: [], secondary: []},
         possible_schwa = false, i, this_char;
@@ -159,7 +160,7 @@ var sort_devanagari = (function($){
             processed_word.secondary.push(0);
           } else {
             processed_word.segment_type.push(3);
-            processed_word.primary.push(segment); // let the built-in sort order handle this
+            processed_word.primary.push(segment.string); // let the built-in sort order handle this
             processed_word.secondary.push(0);
           }
         }
@@ -274,6 +275,7 @@ var sort_devanagari = (function($){
       } // control flows here if all secondaries are also equal
       return 0;
     }
+
     processed_words.sort(compare_processed_words);
 
     var result = $.map(processed_words, function(processed_word, idx) {
